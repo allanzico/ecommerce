@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 
 class RecentlyBought extends StatefulWidget {
+  final String id;
+  final String category;
+  final String measurement;
+  final String name;
+  final String imagePath;
+  final double price;
+  final double discount;
+  final double ratings;
+
+  const RecentlyBought({Key key, this.id, this.category, this.measurement, this.name, this.imagePath, this.price, this.discount, this.ratings}) : super(key: key);
   @override
   _RecentlyBoughtState createState() => _RecentlyBoughtState();
 }
@@ -14,18 +24,19 @@ class _RecentlyBoughtState extends State<RecentlyBought> {
         children: <Widget>[
           Container(
               height: 250,
-              width: 230,
+              width: 340,
               child: Image.asset(
-                "assets/images/salmon.jpg",
+                widget.imagePath,
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
               )),
           Positioned(
             left: 0.0,
             bottom: 0.0,
+            
             child: Container(
                 height: 70,
-                width: 230,
+                width: 340,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         colors: [Colors.black, Colors.black12],
@@ -35,6 +46,7 @@ class _RecentlyBoughtState extends State<RecentlyBought> {
           Positioned(
             left: 10.0,
             bottom: 10.0,
+            right: 10.0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -44,7 +56,7 @@ class _RecentlyBoughtState extends State<RecentlyBought> {
                     Row(
                       children: <Widget>[
                         Text(
-                          "Salmon",
+                          widget.name,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -89,7 +101,7 @@ class _RecentlyBoughtState extends State<RecentlyBought> {
                 Column(
                   children: <Widget>[
                     Text(
-                      " UGX 76,558",
+                      widget.price.toString(),
                       style: TextStyle(
                           color: Colors.green,
                           fontSize: 20,
