@@ -1,4 +1,5 @@
 import 'package:app/DTO/foodDTO.dart';
+import 'package:app/models/FoodModel.dart';
 import 'package:app/screens/widgets/foodCategory.dart';
 import 'package:app/screens/widgets/homeTopInfo.dart';
 import 'package:app/screens/widgets/recentlyBought.dart';
@@ -69,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+//Build food items
   Widget _buildFoodItems(Food food) {
     return Container(margin: EdgeInsets.only(bottom:20), child: RecentlyBought(id: food.id, name: food.name, imagePath: food.imagePath, category: food.category, price: food.price, discount: food.discount,ratings: food.ratings, measurement: food.measurement,),);
   }
