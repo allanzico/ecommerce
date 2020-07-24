@@ -10,7 +10,17 @@ class RecentlyBought extends StatefulWidget {
   final double discount;
   final double ratings;
 
-  const RecentlyBought({Key key, this.id, this.category, this.measurement, this.name, this.imagePath, this.price, this.discount, this.ratings}) : super(key: key);
+  const RecentlyBought(
+      {Key key,
+      this.id,
+      this.category,
+      this.measurement,
+      this.name,
+      this.imagePath,
+      this.price,
+      this.discount,
+      this.ratings})
+      : super(key: key);
   @override
   _RecentlyBoughtState createState() => _RecentlyBoughtState();
 }
@@ -33,7 +43,6 @@ class _RecentlyBoughtState extends State<RecentlyBought> {
           Positioned(
             left: 0.0,
             bottom: 0.0,
-            
             child: Container(
                 height: 70,
                 width: 340,
@@ -101,7 +110,7 @@ class _RecentlyBoughtState extends State<RecentlyBought> {
                 Column(
                   children: <Widget>[
                     Text(
-                      widget.price.toString(),
+                      "UGX " + widget.price.toString(),
                       style: TextStyle(
                           color: Colors.green,
                           fontSize: 20,

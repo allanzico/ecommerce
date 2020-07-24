@@ -1,20 +1,28 @@
+import 'package:app/models/FoodModel.dart';
+import 'package:app/models/scoped_model/foodScopedModel.dart';
 import 'package:app/screens/mainScreen.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final FoodModel foodModel = FoodModel();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ScopedModel<FoodModel>(
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            primarySwatch: Colors.green,
+            textTheme:
+                GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)),
+        home: MainScreen(foodModel: foodModel),
       ),
-      home: MainScreen(),
+      model: foodModel,
     );
   }
 }

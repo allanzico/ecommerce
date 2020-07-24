@@ -1,3 +1,4 @@
+import 'package:app/models/scoped_model/foodScopedModel.dart';
 import 'package:app/screens/pages/favoriteScreen.dart';
 import 'package:app/screens/pages/homeScreen.dart';
 import 'package:app/screens/pages/orderScreen.dart';
@@ -6,12 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class MainScreen extends StatefulWidget {
+  final FoodModel foodModel;
+  MainScreen({this.foodModel});
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
   int currentTabIndex = 0;
+
   HomeScreen homeScreen;
   OrderScreen orderScreen;
   ProfileScreen profileScreen;
@@ -24,6 +28,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+    widget.foodModel.fetchFoods();
     homeScreen = HomeScreen();
     orderScreen = OrderScreen();
     profileScreen = ProfileScreen();
