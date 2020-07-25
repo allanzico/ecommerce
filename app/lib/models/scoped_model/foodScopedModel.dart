@@ -22,6 +22,7 @@ class FoodModel extends Model {
         .get("https://fakestoreapi.com/products")
         .then((http.Response response) {
       final List fetchedData = json.decode(response.body);
+      print(fetchedData);
       final List<Food> fetchedItems = [];
 
       fetchedData.forEach((data) {
@@ -35,7 +36,6 @@ class FoodModel extends Model {
         fetchedItems.add(food);
       });
       _foods = fetchedItems;
-      print(_foods);
     });
   }
 }
