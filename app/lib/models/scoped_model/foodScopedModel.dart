@@ -17,7 +17,7 @@ class FoodModel extends Model {
 
   void fetchFoods() {
     http
-        .get("https://jsonplaceholder.typicode.com/posts/1/comments")
+        .get("https://fakestoreapi.com/products")
         .then((http.Response response) {
       print(response.body);
     });
