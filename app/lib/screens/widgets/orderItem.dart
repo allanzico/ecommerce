@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class orderItem extends StatefulWidget {
+class OrderItem extends StatefulWidget {
   @override
-  _orderItemState createState() => _orderItemState();
+  _OrderItemState createState() => _OrderItemState();
 }
 
-class _orderItemState extends State<orderItem> {
+class _OrderItemState extends State<OrderItem> {
   @override
   Widget build(BuildContext context) {
     return Container(

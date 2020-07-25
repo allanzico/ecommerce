@@ -28,8 +28,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    widget.foodModel.fetchFoods();
-    homeScreen = HomeScreen();
+    // widget.foodModel.fetchFoods();
+    homeScreen = HomeScreen(widget.foodModel);
     orderScreen = OrderScreen();
     profileScreen = ProfileScreen();
     favoriteScreen = FavoriteScreen();

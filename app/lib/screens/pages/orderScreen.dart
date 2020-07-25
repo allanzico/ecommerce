@@ -43,10 +43,10 @@ class _OrderScreenState extends State<OrderScreen> {
         children: <Widget>[
           Column(
             children: <Widget>[
-              orderItem(),
-              orderItem(),
-              orderItem(),
-              orderItem(),
+              OrderItem(),
+              OrderItem(),
+              OrderItem(),
+              OrderItem(),
             ],
           ),
         ],
