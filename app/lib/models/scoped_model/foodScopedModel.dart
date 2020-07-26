@@ -22,20 +22,20 @@ class FoodModel extends Model {
         .get("https://fakestoreapi.com/products")
         .then((http.Response response) {
       final List fetchedData = json.decode(response.body);
-      print(fetchedData);
+
       final List<Food> fetchedItems = [];
 
       fetchedData.forEach((data) {
         Food food = Food(
             id: data["id"],
             category: data["category"],
-            price: data["price"],
-            discount: null,
-            imagePath: data["image"],
-            name: data["title"]);
+            price: data["price"].toDouble(),
+            imagePath: "assets/images/fruits.jpg",
+            name: data["category"]);
         fetchedItems.add(food);
       });
       _foods = fetchedItems;
+      print(_foods[1].price);
     });
   }
 }

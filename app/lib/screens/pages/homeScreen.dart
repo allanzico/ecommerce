@@ -8,10 +8,9 @@ import 'package:app/screens/widgets/searchField.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen(this.foodModel, {Key key, this.title}) : super(key: key);
-
   final FoodModel foodModel;
   final String title;
+  HomeScreen(this.foodModel, {Key key, this.title}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -19,6 +18,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // List<Food> _foods = foods;
+  @override
+  void initState() {
+    widget.foodModel.fetchFoods();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
         imagePath: food.imagePath,
         category: food.category,
         price: food.price,
-        discount: food.discount,
+        // discount: food.discount,
         ratings: food.ratings,
         measurement: food.measurement,
       ),
