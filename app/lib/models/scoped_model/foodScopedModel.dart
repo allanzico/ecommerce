@@ -17,7 +17,7 @@ class FoodModel extends Model {
     _foods.add(food);
   }
 
-  void fetchFoods() {
+  Future<Null> fetchFoods() {
     http
         .get("https://fakestoreapi.com/products")
         .then((http.Response response) {
@@ -30,7 +30,7 @@ class FoodModel extends Model {
             id: data["id"],
             category: data["category"],
             price: data["price"].toDouble(),
-            imagePath: "assets/images/fruits.jpg",
+            imagePath: "assets/images/fruits.png",
             name: data["category"]);
         fetchedItems.add(food);
       });

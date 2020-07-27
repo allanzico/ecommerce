@@ -1,4 +1,5 @@
 import 'package:app/models/scoped_model/foodScopedModel.dart';
+import 'package:app/models/scoped_model/mainModel.dart';
 import 'package:app/screens/pages/favoriteScreen.dart';
 import 'package:app/screens/pages/homeScreen.dart';
 import 'package:app/screens/pages/orderScreen.dart';
@@ -7,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class MainScreen extends StatefulWidget {
-  final FoodModel foodModel;
-  MainScreen({this.foodModel});
+  final MainModel mainModel;
+  MainScreen({this.mainModel});
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -29,7 +30,8 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     // widget.foodModel.fetchFoods();
-    homeScreen = HomeScreen(widget.foodModel);
+    widget.mainModel.fetchFoods();
+    homeScreen = HomeScreen();
     orderScreen = OrderScreen();
     profileScreen = ProfileScreen();
     favoriteScreen = FavoriteScreen();

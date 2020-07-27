@@ -1,16 +1,18 @@
 import 'package:app/DTO/foodDTO.dart';
 import 'package:app/models/FoodModel.dart';
 import 'package:app/models/scoped_model/foodScopedModel.dart';
+import 'package:app/models/scoped_model/mainModel.dart';
 import 'package:app/screens/widgets/foodCategory.dart';
 import 'package:app/screens/widgets/homeTopInfo.dart';
 import 'package:app/screens/widgets/recentlyBought.dart';
 import 'package:app/screens/widgets/searchField.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  final FoodModel foodModel;
+  // final FoodModel foodModel;
   final String title;
-  HomeScreen(this.foodModel, {Key key, this.title}) : super(key: key);
+  HomeScreen({Key key, this.title}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -20,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // List<Food> _foods = foods;
   @override
   void initState() {
-    widget.foodModel.fetchFoods();
+    // widget.foodModel.fetchFoods();
     super.initState();
   }
 
@@ -67,9 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               SizedBox(height: 20),
-              Column(
-                children: widget.foodModel.foods.map(_buildFoodItems).toList(),
-              )
+              ScopedModelDescendant<MainModel>(builder:
+                  (BuildContext context, Widget child, MainModel model) {
+                return Column(
+                  children: model.foods.map(_buildFoodItems).toList(),
+                );
+              })
             ],
           ),
         ),
