@@ -1,7 +1,6 @@
 import 'package:app/screens/pages/signInScreen.dart';
 import 'package:app/screens/widgets/orderItem.dart';
 import 'package:flutter/material.dart';
-import 'package:app/screens/widgets/orderCard.dart';
 
 class OrderScreen extends StatefulWidget {
   @override

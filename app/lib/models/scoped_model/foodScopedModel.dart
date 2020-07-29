@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 class FoodModel extends Model {
   List<Food> _foods = [];
+  final mockURL = "https://jsonplaceholder.typicode.com/users";
 
   //return copy of food list
   List<Food> get foods {
@@ -18,9 +19,7 @@ class FoodModel extends Model {
   }
 
   Future<Null> fetchFoods() {
-    http
-        .get("https://fakestoreapi.com/products")
-        .then((http.Response response) {
+    http.get(mockURL).then((http.Response response) {
       final List fetchedData = json.decode(response.body);
 
       final List<Food> fetchedItems = [];
@@ -28,14 +27,15 @@ class FoodModel extends Model {
       fetchedData.forEach((data) {
         Food food = Food(
             id: data["id"],
-            category: data["category"],
-            price: data["price"].toDouble(),
+            category: data["username"],
+            // price: data["price"].toDouble(),
+            price: 20000.0,
             imagePath: "assets/images/fruits.png",
-            name: data["category"]);
+            name: data["name"]);
         fetchedItems.add(food);
       });
       _foods = fetchedItems;
-      print(_foods[1].price);
+      print(_foods[1].name);
     });
   }
 }

@@ -1,6 +1,6 @@
 import 'package:app/models/scoped_model/foodScopedModel.dart';
 import 'package:app/models/scoped_model/mainModel.dart';
-import 'package:app/screens/pages/favoriteScreen.dart';
+import 'package:app/screens/pages/exploreScreen.dart';
 import 'package:app/screens/pages/homeScreen.dart';
 import 'package:app/screens/pages/orderScreen.dart';
 import 'package:app/screens/pages/profileScreen.dart';
@@ -20,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
   HomeScreen homeScreen;
   OrderScreen orderScreen;
   ProfileScreen profileScreen;
-  FavoriteScreen favoriteScreen;
+  ExploreScreen exploreScreen;
 
   //List of pages
   List<Widget> pages;
@@ -34,8 +34,8 @@ class _MainScreenState extends State<MainScreen> {
     homeScreen = HomeScreen();
     orderScreen = OrderScreen();
     profileScreen = ProfileScreen();
-    favoriteScreen = FavoriteScreen();
-    pages = [homeScreen, orderScreen, favoriteScreen, profileScreen];
+    exploreScreen = ExploreScreen();
+    pages = [homeScreen, exploreScreen, orderScreen, profileScreen];
     currentPage = homeScreen;
   }
 
@@ -67,6 +67,16 @@ class _MainScreenState extends State<MainScreen> {
                 title: Text("Home")),
             BottomNavigationBarItem(
                 icon: Icon(
+                  EvaIcons.compassOutline,
+                  color: Colors.green,
+                ),
+                activeIcon: Icon(
+                  EvaIcons.compass,
+                  color: Colors.green,
+                ),
+                title: Text("Explore")),
+            BottomNavigationBarItem(
+                icon: Icon(
                   EvaIcons.shoppingBagOutline,
                   color: Colors.green,
                 ),
@@ -75,16 +85,6 @@ class _MainScreenState extends State<MainScreen> {
                   color: Colors.green,
                 ),
                 title: Text("Orders")),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  EvaIcons.heartOutline,
-                  color: Colors.green,
-                ),
-                activeIcon: Icon(
-                  EvaIcons.heart,
-                  color: Colors.green,
-                ),
-                title: Text("Favorite")),
             BottomNavigationBarItem(
                 icon: Icon(
                   EvaIcons.personOutline,
