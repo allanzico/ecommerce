@@ -1,3 +1,4 @@
+import 'package:app/Admin/addItem.dart';
 import 'package:app/models/FoodModel.dart';
 import 'package:app/models/scoped_model/foodScopedModel.dart';
 import 'package:app/models/scoped_model/mainModel.dart';
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.green,
             textTheme:
                 GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)),
-        home: MainScreen(mainModel: mainModel),
+        // home: MainScreen(mainModel: mainModel),
+        home: AddItem(),
       ),
       model: mainModel,
     );
