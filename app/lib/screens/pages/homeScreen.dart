@@ -1,4 +1,3 @@
-import 'package:app/DTO/foodDTO.dart';
 import 'package:app/models/FoodModel.dart';
 import 'package:app/models/scoped_model/foodScopedModel.dart';
 import 'package:app/models/scoped_model/mainModel.dart';
@@ -92,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
         imagePath: food.imagePath,
         category: food.category,
         price: food.price,
-        // discount: food.discount,
+        discount: food.discount,
         ratings: food.ratings,
         measurement: food.measurement,
       ),

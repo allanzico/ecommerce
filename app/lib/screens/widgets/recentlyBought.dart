@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RecentlyBought extends StatefulWidget {
-  final int id;
+  final String id;
   final String category;
   final String measurement;
   final String name;

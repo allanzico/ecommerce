@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.green,
             textTheme:
                 GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)),
-        // home: MainScreen(mainModel: mainModel),
-        home: AddItem(),
+        home: MainScreen(mainModel: mainModel),
+        // home: AddItem(),
       ),
       model: mainModel,
     );

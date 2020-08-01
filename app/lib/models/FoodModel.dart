@@ -1,5 +1,5 @@
 class Food {
-  final int id;
+  final String id;
   final String category;
   final String measurement;
   final String name;
