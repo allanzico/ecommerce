@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 class FoodModel extends Model {
   List<Food> _foods = [];
+  bool _isLoading = false;
   final mockURL = "https://jsonplaceholder.typicode.com/users";
   final firebaseURL = "https://groceryapp-6a377.firebaseio.com/foods.json";
 
@@ -15,57 +16,83 @@ class FoodModel extends Model {
     return List.from(_foods);
   }
 
-  void addFood(Food food) async {
-    //Post data to firebase
-    final Map<String, dynamic> foodData = {
-      "name": food.name,
-      "description": food.description,
-      "category": food.category,
-      "price": food.price,
-      "discount": food.discount
-    };
-    final http.Response response =
-        await http.post(firebaseURL, body: json.encode(foodData));
-
-    //Fetch data and get ID
-    final Map<String, dynamic> responseData = json.decode(response.body);
-
-//Data with Firebase ID
-    Food foodDataWithID = Food(
-        id: responseData["name"],
-        name: food.name,
-        description: food.description,
-        category: food.category,
-        price: food.price,
-        discount: food.discount);
-
-//Save to food list
-    _foods.add(foodDataWithID);
-    // print(_foods[0].name);
+  //Get loader
+  bool get isLoading {
+    return _isLoading;
   }
 
-  Future<Null> fetchFoods() {
-    http
-        .get(
-      firebaseURL,
-    )
-        .then((http.Response response) {
+  Future<bool> addFood(Food food) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      //Post data to firebase
+      final Map<String, dynamic> foodData = {
+        "name": food.name,
+        "description": food.description,
+        "category": food.category,
+        "price": food.price,
+        "discount": food.discount,
+        "slug": food.slug
+      };
+      final http.Response response =
+          await http.post(firebaseURL, body: json.encode(foodData));
+
+      //Fetch data and get ID
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+//Data with Firebase ID
+      Food foodDataWithID = Food(
+          id: responseData["name"],
+          name: food.name,
+          description: food.description,
+          category: food.category,
+          price: food.price,
+          slug: food.slug,
+          discount: food.discount);
+
+//Save to food list
+      _foods.add(foodDataWithID);
+      _isLoading = false;
+      notifyListeners();
+
+      return Future.value(true);
+    } catch (e) {
+      _isLoading = false;
+      notifyListeners();
+      return Future.value(false);
+    }
+  }
+
+  Future<bool> fetchFoods() async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final http.Response response = await http.get(firebaseURL);
+
       final Map<String, dynamic> fetchedData = json.decode(response.body);
 
       final List<Food> fetchedItems = [];
+      fetchedData.forEach((String id, dynamic foodData) {
+        Food foodItem = Food(
+            id: id,
+            name: foodData["name"],
+            description: foodData["description"],
+            category: foodData["category"],
+            discount: foodData["discount"],
+            imagePath: "assets/images/fruits.png",
+            price: foodData["price"],
+            slug: foodData["slug"]);
 
-      // fetchedData.forEach((data) {
-      //   Food food = Food(
-      //       id: data["name"],
-      //       category: data["category"],
-      //       price: data["price"].toDouble(),
-      //       // price: 20000.0,
-      //       imagePath: "assets/images/fruits.png",
-      //       name: data["name"]);
-      //   fetchedItems.add(food);
-      // });
-      // _foods = fetchedItems;
-      print(fetchedData);
-    });
+        fetchedItems.add(foodItem);
+      });
+      _foods = fetchedItems;
+      _isLoading = false;
+      notifyListeners();
+      return Future.value(true);
+    } catch (e) {
+      _isLoading = false;
+      notifyListeners();
+      return Future.value(false);
+    }
   }
 }

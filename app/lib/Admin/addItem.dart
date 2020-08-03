@@ -17,9 +17,11 @@ class _AddItemState extends State<AddItem> {
   String description;
   String slug;
   GlobalKey<FormState> _itemFormKey = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldStateKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldStateKey,
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 60, horizontal: 16),
         width: MediaQuery.of(context).size.width,
@@ -79,16 +81,9 @@ class _AddItemState extends State<AddItem> {
                             fontWeight: FontWeight.bold,
                           )),
                       onPressed: () async {
-                        if (_itemFormKey.currentState.validate()) {
-                          _itemFormKey.currentState.save();
-                          final Food foodItem = Food(
-                            name: itemName,
-                            category: category,
-                            description: description,
-                            price: double.parse(price),
-                            discount: double.parse(discount),
-                          );
-                          model.addFood(foodItem);
+                        onSubmit(model);
+                        if (model.isLoading) {
+                          showLoadingIndicator();
                         }
                       },
                     ),
@@ -100,6 +95,53 @@ class _AddItemState extends State<AddItem> {
         ),
       ),
     );
+  }
+
+  //Loading Dialog
+  Future<void> showLoadingIndicator() {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              content: Row(children: <Widget>[
+            CircularProgressIndicator(),
+            SizedBox(
+              width: 10,
+            ),
+            Text("adding item...")
+          ]));
+        });
+  }
+
+  // Submit Food
+
+  void onSubmit(MainModel model) async {
+    if (_itemFormKey.currentState.validate()) {
+      _itemFormKey.currentState.save();
+      final Food foodItem = Food(
+        name: itemName,
+        category: category,
+        description: description,
+        slug: slug,
+        price: double.parse(price),
+        discount: double.parse(discount),
+      );
+      bool value = await model.addFood(foodItem);
+      if (value) {
+        Navigator.of(context).pop();
+        SnackBar snackBar = SnackBar(
+          content: Text("Item addedd successfully"),
+        );
+        _scaffoldStateKey.currentState.showSnackBar(snackBar);
+      } else if (!value) {
+        Navigator.of(context).pop();
+        SnackBar snackBar = SnackBar(
+          content: Text("Adding Item failed "),
+        );
+        _scaffoldStateKey.currentState.showSnackBar(snackBar);
+      }
+    }
   }
 
   Widget _buildTextFormField(String labelText, {int maxLines = 1}) {

@@ -15,6 +15,7 @@ class HomeTopInfo extends StatelessWidget {
           ),
           Icon(
             Icons.notifications_none,
+            color: Colors.green,
             size: 24,
           )
         ],

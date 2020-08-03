@@ -28,7 +28,7 @@ class SearchField extends StatelessWidget {
             ),
             trailing: Icon(
               Icons.filter_list,
-              color: Colors.black,
+              color: Colors.green,
             ),
           ),
         ),

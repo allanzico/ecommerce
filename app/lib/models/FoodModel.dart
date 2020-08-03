@@ -7,10 +7,12 @@ class Food {
   final double price;
   final double discount;
   final String description;
+  final String slug;
   final double ratings;
 
   Food(
       {this.measurement,
+      this.slug,
       this.description,
       this.id,
       this.category,
