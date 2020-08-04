@@ -81,7 +81,7 @@ class _AddItemState extends State<AddItem> {
                             fontWeight: FontWeight.bold,
                           )),
                       onPressed: () async {
-                        onSubmit(model);
+                        onSubmit(model.addFood);
                         if (model.isLoading) {
                           showLoadingIndicator();
                         }
@@ -116,7 +116,7 @@ class _AddItemState extends State<AddItem> {
 
   // Submit Food
 
-  void onSubmit(MainModel model) async {
+  void onSubmit(Function addFood) async {
     if (_itemFormKey.currentState.validate()) {
       _itemFormKey.currentState.save();
       final Food foodItem = Food(
@@ -127,7 +127,7 @@ class _AddItemState extends State<AddItem> {
         price: double.parse(price),
         discount: double.parse(discount),
       );
-      bool value = await model.addFood(foodItem);
+      bool value = await addFood(foodItem);
       if (value) {
         Navigator.of(context).pop();
         SnackBar snackBar = SnackBar(
