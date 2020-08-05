@@ -49,6 +49,14 @@ class _MainScreenState extends State<MainScreen> {
           backgroundColor: Colors.white,
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.green),
+          title: Text(
+            currentTabIndex == 1
+                ? "All Food"
+                : currentTabIndex == 2
+                    ? "Orders"
+                    : currentTabIndex == 3 ? "Profile" : "",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
         ),
         drawer: Drawer(
           child: Column(
