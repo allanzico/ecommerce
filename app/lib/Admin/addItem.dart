@@ -170,6 +170,19 @@ class _AddItemState extends State<AddItem> {
 
   Widget _buildTextFormField(String labelText, {int maxLines = 1}) {
     return TextFormField(
+        initialValue: widget.food != null && labelText == "Item name"
+            ? widget.food.name
+            : widget.food != null && labelText == "Price"
+                ? widget.food.price.toString()
+                : widget.food != null && labelText == "Description"
+                    ? widget.food.description
+                    : widget.food != null && labelText == "Category"
+                        ? widget.food.category
+                        : widget.food != null && labelText == "Slug"
+                            ? widget.food.slug
+                            : widget.food != null && labelText == "Discount"
+                                ? widget.food.discount.toString()
+                                : "",
         decoration: InputDecoration(
             labelText: "$labelText",
             filled: true,
