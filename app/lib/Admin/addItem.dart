@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class AddItem extends StatefulWidget {
+  final Food food;
+  AddItem({this.food});
   @override
   _AddItemState createState() => _AddItemState();
 }
@@ -20,76 +22,98 @@ class _AddItemState extends State<AddItem> {
   GlobalKey<ScaffoldState> _scaffoldStateKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldStateKey,
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 60, horizontal: 16),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: SingleChildScrollView(
-          child: Form(
-            key: _itemFormKey,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height: 150,
-                  margin: EdgeInsets.only(bottom: 15),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadiusDirectional.circular(5),
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/noimage.png"))),
-                ),
-                _buildTextFormField("Item name"),
-                SizedBox(
-                  height: 15,
-                ),
-                _buildTextFormField("Price"),
-                SizedBox(
-                  height: 15,
-                ),
-                _buildTextFormField("Discount"),
-                SizedBox(
-                  height: 15,
-                ),
-                _buildTextFormField("Category"),
-                SizedBox(
-                  height: 15,
-                ),
-                _buildTextFormField("Slug"),
-                SizedBox(
-                  height: 15,
-                ),
-                _buildTextFormField("Description", maxLines: 3),
-                SizedBox(
-                  height: 15,
-                ),
-                ScopedModelDescendant(builder:
-                    (BuildContext context, Widget child, MainModel model) {
-                  return SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: RaisedButton(
-                      color: Colors.green,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2),
+    return SafeArea(
+      child: Scaffold(
+        key: _scaffoldStateKey,
+        appBar: AppBar(
+          title: Text(
+            "Add Item",
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0),
+          ),
+          centerTitle: true,
+          leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+          elevation: 0,
+          backgroundColor: Colors.white,
+        ),
+        body: Container(
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: SingleChildScrollView(
+            child: Form(
+              key: _itemFormKey,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    height: 150,
+                    margin: EdgeInsets.only(bottom: 15),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadiusDirectional.circular(5),
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/noimage.png"))),
+                  ),
+                  _buildTextFormField("Item name"),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildTextFormField("Price"),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildTextFormField("Discount"),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildTextFormField("Category"),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildTextFormField("Slug"),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildTextFormField("Description", maxLines: 3),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  ScopedModelDescendant(builder:
+                      (BuildContext context, Widget child, MainModel model) {
+                    return SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: RaisedButton(
+                        color: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                        child: Text('Save',
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        onPressed: () async {
+                          onSubmit(model.addFood);
+                          if (model.isLoading) {
+                            showLoadingIndicator();
+                          }
+                        },
                       ),
-                      child: Text('Save',
-                          style: TextStyle(
-                            fontSize: 25.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          )),
-                      onPressed: () async {
-                        onSubmit(model.addFood);
-                        if (model.isLoading) {
-                          showLoadingIndicator();
-                        }
-                      },
-                    ),
-                  );
-                }),
-              ],
+                    );
+                  }),
+                ],
+              ),
             ),
           ),
         ),

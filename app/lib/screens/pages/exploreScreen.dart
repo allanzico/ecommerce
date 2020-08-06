@@ -7,11 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class ExploreScreen extends StatefulWidget {
+  final MainModel model;
+  ExploreScreen({this.model});
   @override
   _ExploreScreenState createState() => _ExploreScreenState();
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
+  @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   widget.model.fetchFoods();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: ScopedModelDescendant(
@@ -27,8 +36,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   return GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext materialContext) =>
-                              AddItem()));
+                          builder: (BuildContext materialContext) => AddItem(
+                                food: model.foods[index],
+                              )));
                     },
                     child: ExploreFood(
                       model.foods[index].name,

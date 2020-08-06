@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class MainScreen extends StatefulWidget {
-  final MainModel mainModel;
-  MainScreen({this.mainModel});
+  final MainModel model;
+  MainScreen({this.model});
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     // widget.foodModel.fetchFoods();
-    widget.mainModel.fetchFoods();
+    widget.model.fetchFoods();
     homeScreen = HomeScreen();
     orderScreen = OrderScreen();
     profileScreen = ProfileScreen();
@@ -55,8 +55,10 @@ class _MainScreenState extends State<MainScreen> {
                 : currentTabIndex == 2
                     ? "Orders"
                     : currentTabIndex == 3 ? "Profile" : "",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
           ),
+          centerTitle: true,
         ),
         drawer: Drawer(
           child: Column(

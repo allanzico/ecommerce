@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.green,
             textTheme:
                 GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)),
-        home: MainScreen(mainModel: mainModel),
+        home: MainScreen(model: mainModel),
         // home: AddItem(),
       ),
       model: mainModel,
