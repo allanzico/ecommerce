@@ -8,8 +8,11 @@ import 'package:http/http.dart' as http;
 class FoodModel extends Model {
   List<Food> _foods = [];
   bool _isLoading = false;
+  static String foodId;
   final mockURL = "https://jsonplaceholder.typicode.com/users";
   final firebaseURL = "https://groceryapp-6a377.firebaseio.com/foods.json";
+  final firebasePutURL =
+      "https://groceryapp-6a377.firebaseio.com/foods/${foodId}.json";
 
   //return copy of food list
   List<Food> get foods {
@@ -20,6 +23,8 @@ class FoodModel extends Model {
   bool get isLoading {
     return _isLoading;
   }
+
+  //CREATE
 
   Future<bool> addFood(Food food) async {
     _isLoading = true;
@@ -63,6 +68,7 @@ class FoodModel extends Model {
     }
   }
 
+//READ
   Future<bool> fetchFoods() async {
     _isLoading = true;
     notifyListeners();
@@ -88,6 +94,37 @@ class FoodModel extends Model {
       _foods = fetchedItems;
       _isLoading = false;
       notifyListeners();
+      return Future.value(true);
+    } catch (e) {
+      _isLoading = false;
+      notifyListeners();
+      return Future.value(false);
+    }
+  }
+
+  //UPDATE
+  Future<bool> updateFood(Map<String, dynamic> foodData, foodId) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final http.Response response =
+          await http.put(firebasePutURL, body: json.encode(foodData));
+
+//Post data to firebase
+      Food updatedItem = Food(
+          id: foodId,
+          name: foodData["name"],
+          description: foodData["description"],
+          category: foodData["category"],
+          price: foodData["price"],
+          discount: foodData["discount"],
+          slug: foodData["slug"]);
+
+//Save to food list
+      // _foods.add(foodDataWithID);
+      _isLoading = false;
+      notifyListeners();
+
       return Future.value(true);
     } catch (e) {
       _isLoading = false;

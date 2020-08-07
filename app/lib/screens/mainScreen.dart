@@ -84,8 +84,8 @@ class _MainScreenState extends State<MainScreen> {
             },
             currentIndex: currentTabIndex,
             type: BottomNavigationBarType.fixed,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
+            // showSelectedLabels: false,
+            // showUnselectedLabels: false,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                   icon: Icon(

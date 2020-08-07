@@ -27,7 +27,7 @@ class _AddItemState extends State<AddItem> {
         key: _scaffoldStateKey,
         appBar: AppBar(
           title: Text(
-            "Add Item",
+            widget.food != null ? "Edit Item" : "Add Item",
             style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -97,14 +97,15 @@ class _AddItemState extends State<AddItem> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(2),
                         ),
-                        child: Text('Save',
+                        child: Text(
+                            widget.food != null ? 'Update Item' : "Add Item",
                             style: TextStyle(
                               fontSize: 25.0,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             )),
                         onPressed: () async {
-                          onSubmit(model.addFood);
+                          onSubmit(model.addFood, model.updateFood);
                           if (model.isLoading) {
                             showLoadingIndicator();
                           }
@@ -139,31 +140,47 @@ class _AddItemState extends State<AddItem> {
   }
 
   // Submit Food
-
-  void onSubmit(Function addFood) async {
+  void onSubmit(Function addFood, Function updateFood) async {
     if (_itemFormKey.currentState.validate()) {
       _itemFormKey.currentState.save();
-      final Food foodItem = Food(
-        name: itemName,
-        category: category,
-        description: description,
-        slug: slug,
-        price: double.parse(price),
-        discount: double.parse(discount),
-      );
-      bool value = await addFood(foodItem);
-      if (value) {
-        Navigator.of(context).pop();
-        SnackBar snackBar = SnackBar(
-          content: Text("Item addedd successfully"),
+      if (widget.food != null) {
+        //UPDATE
+        Map<String, dynamic> updatedItem = {
+          "name": itemName,
+          "category": category,
+          "slug": slug,
+          "price": double.parse(price),
+          "discount": discount != null ? double.parse(discount) : 0,
+        };
+        bool isUpdated = await updateFood(updatedItem, widget.food.id);
+      } else if (widget.food == null) {
+        //CREATE
+
+        final Food foodItem = Food(
+          name: itemName,
+          category: category,
+          description: description,
+          slug: slug,
+          price: double.parse(price),
+          discount: double.parse(discount),
         );
-        _scaffoldStateKey.currentState.showSnackBar(snackBar);
-      } else if (!value) {
-        Navigator.of(context).pop();
-        SnackBar snackBar = SnackBar(
-          content: Text("Adding Item failed "),
-        );
-        _scaffoldStateKey.currentState.showSnackBar(snackBar);
+        bool value = await addFood(foodItem);
+        if (value) {
+          Navigator.of(context).pop();
+          SnackBar snackBar = SnackBar(
+            content: Text("Item addedd successfully"),
+          );
+          _scaffoldStateKey.currentState.showSnackBar(snackBar);
+        } else if (!value) {
+          Navigator.of(context).pop();
+          SnackBar snackBar = SnackBar(
+            content: Text(
+              "Adding Item failed ",
+              style: TextStyle(color: Colors.white),
+            ),
+          );
+          _scaffoldStateKey.currentState.showSnackBar(snackBar);
+        }
       }
     }
   }
@@ -222,7 +239,7 @@ class _AddItemState extends State<AddItem> {
             return errorMsg;
           }
         },
-        onChanged: (String value) {
+        onSaved: (String value) {
           if (labelText == "Item name") {
             itemName = value;
           }
